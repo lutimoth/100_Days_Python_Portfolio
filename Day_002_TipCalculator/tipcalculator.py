@@ -5,6 +5,9 @@ percent = int(input("What percentage tip would you like to give? 10, 12, or 15? 
 tip = 1 + (percent/100)
 people = int(input("How many people to split the bill? "))
 
-total = round(((bill*tip)/people),2)
 
-print(f"Each person should pay: ${total}")
+
+total = (bill*tip)/people
+# Also couldve written as total = "{:.2f}".format(total) and just reference as {total}
+# Instead of using round(num,2) we can use format to create {num:.2f} for 2 decimal places
+print(f"Each person should pay: ${total:.2f}")
