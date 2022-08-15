@@ -1,7 +1,7 @@
 #Step 3 - Adding in win condition
 
 import random
-from re import A
+
 word_list = ["aardvark", "baboon", "camel"]
 word = random.choice(word_list)
 
@@ -23,12 +23,8 @@ while not end:
     #Check Guessed letter
     for l in range(len(word)):
         print(f"Current position: {l}\n Current letter: {word[l]}\n Guessed letter: {guess}")
-        if display[l] != '_':
-            continue
-        elif word[l] == guess:
+        if word[l] == guess:
             display[l] = guess
-        else:
-            display[l] = "_"
     print(display)
 
     if '_' not in display:
