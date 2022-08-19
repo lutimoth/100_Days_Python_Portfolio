@@ -24,6 +24,7 @@ import random
 player_score = 0
 computer_score = 0
 
+print(logo)
 start = input('Do you want to play a game of blackjack? y/n ')
 
 if start == 'y':
@@ -47,7 +48,7 @@ dealing = True
 while game:
     while dealing:
         deal = input("Type 'y' to get another card, type 'n' to pass:")
-        
+
         if deal == 'y':
             player_hand.append(random.choice(cards))
             player_score = sum(player_hand)
