@@ -7,8 +7,6 @@ import random
 
 def random_item():
     return random.choice(data)
-#   name, follower_count, description, country = choice.values()
-
 
 # Find the answer
 def answer(A, B):
@@ -16,41 +14,38 @@ def answer(A, B):
         return 'A'
     else:
         return 'B'
-    
-def generate():
+
+# Generate the choices
+def generate(A, B, score):
     if A:
         A, B = B, random_item()
-        output(A, B)
+        output(A, B, score)
     else:
         A, B = random_item(), random_item()
-        output(A,B)
+        output(A,B, score)
         
-score = 0
-
 # Compare player guess to choice
-def compare(guess, correct):
+def compare(A, B, guess, correct, score):
     if guess == correct:
-        generate(A,B)
+        score += 1
+        generate(A, B, score)
         return score
     else:
         print(f"Your final score is {score}")
 
 # Show player choices and let them choose
-def output(A,B):
+def output(A, B, score):
+    print(art.logo)
     print(f"{A['name']} is a {A['description']} and is from {A['country']}")
+    print(art.vs)
     print(f"{B['name']} is a {B['description']} and is from {B['country']}")
     choice = input("Which one do you think has more followers?: ").upper()
     correct = answer(A,B)
-    compare(choice, correct)
-    
+    compare(A, B, choice, correct, score)
 
-# def player_choice():
-#     choice = input("Which one do you think has more followers?: ").upper()
-#     correct = answer(A,B)
-#     compare(choice, correct)
 
-# Initialize our choices
-A = random_item()
-B = random_item()
-
-output(A,B, score)
+# Initialize our choices and start the game
+score = 0
+A = ""
+B = ""
+generate(A, B, score)
