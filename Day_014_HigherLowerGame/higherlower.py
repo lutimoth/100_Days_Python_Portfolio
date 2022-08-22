@@ -20,19 +20,17 @@ def answer(A, B):
 def generate():
     if A:
         A, B = B, random_item()
-        output(A,B)
+        output(A, B)
     else:
         A, B = random_item(), random_item()
-        return A, B
-
+        output(A,B)
+        
 score = 0
 
 # Compare player guess to choice
-def compare(A, B, guess, correct, score):
+def compare(guess, correct):
     if guess == correct:
-        score += 1
-        A, B = B, random_item()
-        output(A,B, score)
+        generate(A,B)
         return score
     else:
         print(f"Your final score is {score}")
@@ -43,7 +41,8 @@ def output(A,B):
     print(f"{B['name']} is a {B['description']} and is from {B['country']}")
     choice = input("Which one do you think has more followers?: ").upper()
     correct = answer(A,B)
-    score = compare(A, B, choice, correct, score)
+    compare(choice, correct)
+    
 
 # def player_choice():
 #     choice = input("Which one do you think has more followers?: ").upper()
