@@ -1,9 +1,7 @@
-from asyncio.streams import FlowControlMixin
-from itertools import count
-from unicodedata import name
 import art
 from game_data import data
 import random
+import os
 
 def random_item():
     return random.choice(data)
@@ -31,14 +29,18 @@ def compare(A, B, guess, correct, score):
         generate(A, B, score)
         return score
     else:
+        os.system('cls')
+        print(art.logo)
         print(f"Your final score is {score}")
 
 # Show player choices and let them choose
 def output(A, B, score):
+    os.system('cls')
     print(art.logo)
-    print(f"{A['name']} is a {A['description']} and is from {A['country']}")
+    print(f"Compare A: {A['name']} is a {A['description']} and is from {A['country']}")
     print(art.vs)
-    print(f"{B['name']} is a {B['description']} and is from {B['country']}")
+    print(f"Compare B: {B['name']} is a {B['description']} and is from {B['country']}")
+    print(f"Your current score is {score}")
     choice = input("Which one do you think has more followers?: ").upper()
     correct = answer(A,B)
     compare(A, B, choice, correct, score)
