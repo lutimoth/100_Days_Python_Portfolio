@@ -39,7 +39,7 @@ while ordering:
         }
 
     # Coffee maker (deduct resources)
-    def deduct(coffee):
+    def make_coffee(coffee):
         for ingredient in MENU[coffee]['ingredients']:
             resources[ingredient] -= MENU[coffee]['ingredients'][ingredient]
 
@@ -50,14 +50,12 @@ while ordering:
         if payment < cost:
             print("Sorry not enough money. Your coins have been refunded.")
         elif payment == cost:
-            deduct(coffee)
+            make_coffee(coffee)
             print(f"Here is your {coffee}, enjoy!")
-            #reorder()
         else:
             change = payment - cost
-            deduct(coffee)
+            make_coffee(coffee)
             print(f"Here is your ${change:.2f} change and your {coffee}, enjoy!")
-            #reorder()
 
     # Payment Method
     def payment(coffee):
@@ -102,7 +100,6 @@ while ordering:
             if MENU[coffee]['ingredients'][ingredient] > resources[ingredient]:
                 print(f"Sorry there is not enough {ingredient}")
                 return
-                #reorder()
         payment(coffee)
 
     if order == 'espresso' or order == 'latte' or order == 'cappuccino':
