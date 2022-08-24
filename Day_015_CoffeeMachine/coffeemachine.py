@@ -1,30 +1,5 @@
 from art import logo
-
-MENU = {
-    "espresso": {
-        "ingredients": {
-            "water": 50,
-            "coffee": 18,
-        },
-        "cost": 1.5,
-    },
-    "latte": {
-        "ingredients": {
-            "water": 200,
-            "milk": 150,
-            "coffee": 24,
-        },
-        "cost": 2.5,
-    },
-    "cappuccino": {
-        "ingredients": {
-            "water": 250,
-            "milk": 100,
-            "coffee": 24,
-        },
-        "cost": 3.0,
-    }
-}
+from menu import MENU
 
 resources = {
     "water": 300,
@@ -81,7 +56,7 @@ while ordering:
         else:
             change = payment - cost
             deduct(coffee)
-            print(f"Here is your ${change} change and your {coffee}, enjoy!")
+            print(f"Here is your ${change:.2f} change and your {coffee}, enjoy!")
             #reorder()
 
     # Payment Method
@@ -137,4 +112,5 @@ while ordering:
     if another_cup == 'y':
         continue
     else:
+        print("Good bye! Thanks for coming!")
         ordering = False
