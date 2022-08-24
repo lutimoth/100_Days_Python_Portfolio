@@ -1,3 +1,5 @@
+from art import logo
+
 MENU = {
     "espresso": {
         "ingredients": {
@@ -33,6 +35,8 @@ resources = {
 
 ordering = True
 
+print(logo)
+print("☕ Welcome to the coffee shop! ☕")
 
 while ordering:
     # TODO Prompt user "What would you like"
@@ -49,6 +53,14 @@ while ordering:
     if order == 'off':
         print("Good bye!")
         ordering = False
+
+    if order == 'refill':
+        resources = {
+            "water": 300,
+            "milk": 200,
+            "coffee": 100,
+            "money": 0
+        }
 
     # TODO Coffee maker (deduct resources)
     def deduct(coffee):
@@ -73,17 +85,39 @@ while ordering:
 
     # Payment Method
     def payment(coffee):
+        print(f"Your {coffee} is ${MENU[coffee]['cost']:.2f}.")
         while True:
             try:
                 quarters = int(input("How many quarters?: "))
                 break
             except ValueError:
-                print("please input integero only")
+                print("please input integer only")
                 continue
 
-        dimes = int(input("How many dimes?: "))
-        nickels = int(input("How many nickels?: "))
-        pennies = int(input("How many pennies?: "))
+        while True:
+            try:
+                dimes = int(input("How many dimes?: "))
+                break
+            except ValueError:
+                print("please input integer only")
+                continue
+
+        while True:
+            try:
+                nickels = int(input("How many nickels?: "))
+                break
+            except ValueError:
+                print("please input integer only")
+                continue
+
+        while True:
+            try:
+                pennies = int(input("How many pennies?: "))
+                break
+            except ValueError:
+                print("please input integer only")
+                continue
+
         check_payment(coffee, quarters, dimes, nickels, pennies)
 
 # TODO Resource Check upon order
@@ -91,23 +125,15 @@ while ordering:
         for ingredient in MENU[coffee]['ingredients']:
             if MENU[coffee]['ingredients'][ingredient] > resources[ingredient]:
                 print(f"Sorry there is not enough {ingredient}")
-                reorder()
+                return
+                #reorder()
         payment(coffee)
 
     if order == 'espresso' or order == 'latte' or order == 'cappuccino':
         check_order(order)
 
-# TODO Optional: refill to reset resources
-    if order == 'refill':
-        resources = {
-            "water": 300,
-            "milk": 200,
-            "coffee": 100,
-            "money": 0
-        }
-
-    another_cup = input("Would you like another cup? (y/n): ")
+    another_cup = input("Would you like order something else? (y/n): ")
     if another_cup == 'y':
         continue
     else:
-        break
+        ordering = False
