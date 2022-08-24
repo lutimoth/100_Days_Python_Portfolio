@@ -39,7 +39,7 @@ print(logo)
 print("☕ Welcome to the coffee shop! ☕")
 
 while ordering:
-    # TODO Prompt user "What would you like"
+    # Prompt user "What would you like"
     order = input("What would you like? (espresso/latte/cappuccino): ").lower()
 
     # If user asks for a report, print out current report
@@ -49,11 +49,12 @@ while ordering:
         print(f"Coffee: {resources['coffee']}")
         print(f"Money: ${resources['money']:.2f}")
 
-# TODO Turn off command
+# Turn off if user asks to turn off
     if order == 'off':
         print("Good bye!")
         ordering = False
 
+# Refill if user asks to refill, empty out the "Money"
     if order == 'refill':
         resources = {
             "water": 300,
@@ -62,7 +63,7 @@ while ordering:
             "money": 0
         }
 
-    # TODO Coffee maker (deduct resources)
+    # Coffee maker (deduct resources)
     def deduct(coffee):
         for ingredient in MENU[coffee]['ingredients']:
             resources[ingredient] -= MENU[coffee]['ingredients'][ingredient]
@@ -120,7 +121,7 @@ while ordering:
 
         check_payment(coffee, quarters, dimes, nickels, pennies)
 
-# TODO Resource Check upon order
+# Resource Check upon order
     def check_order(coffee):
         for ingredient in MENU[coffee]['ingredients']:
             if MENU[coffee]['ingredients'][ingredient] > resources[ingredient]:
