@@ -7,7 +7,6 @@ menu = Menu()
 machine = CoffeeMaker()
 money = MoneyMachine()
 
-
 ordering = True
 
 print(logo)
