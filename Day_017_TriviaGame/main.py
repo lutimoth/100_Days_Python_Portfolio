@@ -3,7 +3,7 @@ from question_model import Question
 import quiz_brain
 
 # Creating question objects
-question_bank = [Question(question['text'], question['answer']) for question in question_data]
+question_bank = [Question(entry['question'], entry['correct_answer']) for entry in question_data]
 
 # Creating quiz brain
 quiz = quiz_brain.QuizBrain(question_bank)
