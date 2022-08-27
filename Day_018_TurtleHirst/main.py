@@ -1,5 +1,6 @@
-###This code will not work in repl.it as there is no access to the colorgram package here.###
-##We talk about this in the video tutorials##
+# Replicate Hirst Painting as a Project
+
+
 import colorgram
 
 rgb_colors = []
