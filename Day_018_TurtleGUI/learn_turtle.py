@@ -63,8 +63,14 @@ def random_color():
 
 
 # Draw a Spirograph
+timmy.speed("fastest")
+def draw_spiro(gap_size):
+    for tilt in range(int(360/gap_size)):
+        timmy.seth(timmy.heading() + gap_size)
+        timmy.circle(100)
+        timmy.color(random_color())
 
-
+draw_spiro(5)
 
 screen = t.Screen()
 screen.exitonclick()
