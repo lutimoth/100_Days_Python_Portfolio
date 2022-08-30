@@ -1,4 +1,4 @@
-from turtle import Turtle, Screen, screensize
+from turtle import Turtle, Screen
 
 tim = Turtle()
 screen = Screen()
