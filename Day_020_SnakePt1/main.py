@@ -31,9 +31,14 @@ while gaming:
     #     seg.forward(20)  Prevents turning
     snake.move()
     
-    # detect collision with food
+    # Detect collision with food
     if snake.head.distance(food) < 15:
         food.refresh()
         scoreboard.score_add()
+
+    # Detect wall collision
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        gaming = False
+        scoreboard.game_over()
 
 screen.exitonclick()
