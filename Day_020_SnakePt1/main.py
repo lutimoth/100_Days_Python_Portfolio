@@ -24,21 +24,27 @@ screen.onkey(snake.right, "Right")
 
 gaming = True
 while gaming:
+   
     # Keep update outside for loop so we only update when all 3 segments moved
     screen.update()
     time.sleep(0.1)
-    # for seg in segments: This is not good
-    #     seg.forward(20)  Prevents turning
     snake.move()
     
     # Detect collision with food
     if snake.head.distance(food) < 15:
-        food.refresh()
-        scoreboard.score_add()
+        food.refresh() # spawn new food
+        scoreboard.score_add() # add to the scoreboard
+        snake.extend() # extend the snake
 
     # Detect wall collision
-    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+    if snake.head.xcor() > 280 or snake.head.xcor() < -290 or snake.head.ycor() > 270 or snake.head.ycor() < -280:
         gaming = False
         scoreboard.game_over()
+
+    # Detect tail collison
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            gaming = False
+            scoreboard.game_over()
 
 screen.exitonclick()
