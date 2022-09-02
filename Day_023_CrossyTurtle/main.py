@@ -31,7 +31,9 @@ while gaming:
     # Detect car collision
     for car in cars.all_cars:
         if player.distance(car) < 20:
+            score.game_over()
             gaming = False
+            
     
     if player.ycor() > 280:
         player.level_up()
