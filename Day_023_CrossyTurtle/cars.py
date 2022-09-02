@@ -9,6 +9,7 @@ class Cars(Turtle):
     
     def __init__(self):
         self.all_cars = []
+        self.movement_speed = INIT_SPEED
         
     def create_car(self):
         random_chance = random.randint(1,6)
@@ -24,4 +25,9 @@ class Cars(Turtle):
     
     def move_cars(self):
         for car in self.all_cars:
-            car.backward(INIT_SPEED)
+            car.backward(self.movement_speed)
+            
+    def speed_up(self):
+        self.movement_speed += ACCELERATION
+        
+        
