@@ -25,7 +25,7 @@ writer.penup()
 writer.hideturtle()
 
 while guessing:
-    answer_state = screen.textinput(title=f"{score}/50 states guessed", prompt="What is a state name?").title()
+    answer_state = screen.textinput(title=f"{score}/50 States Guessed", prompt="What is a state name?").title()
 
     if states_info['state'].str.contains(answer_state).any() and answer_state not in correct_guesses:
        info = states_info.loc[states_info["state"] == answer_state].values.flatten().tolist()
