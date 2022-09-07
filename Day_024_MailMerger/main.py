@@ -17,12 +17,13 @@ with open('./Input/Names/invited_names.txt') as names:
 clean_names = [name.strip() for name in name_list]
 # print(clean_names)
 
+PLACEHOLDER = "[name]"
 
 #Loop through names in list and create new letters
 for name in clean_names:
     with open('./Input/Letters/starting_letter.txt') as letter:
         standard_letter = letter.readlines()
-    standard_letter[0] = standard_letter[0].replace("[name]", name)
+    standard_letter[0] = standard_letter[0].replace(PLACEHOLDER, name)
     print(standard_letter)
     new_letter = ' '.join(standard_letter)
     with open(f'./Output/ReadyToSend/{name}.txt', mode='w') as final_letter:
