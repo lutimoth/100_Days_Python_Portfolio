@@ -24,7 +24,7 @@ for name in clean_names:
     with open('./Input/Letters/starting_letter.txt') as letter:
         standard_letter = letter.readlines()
     standard_letter[0] = standard_letter[0].replace(PLACEHOLDER, name)
-    print(standard_letter)
+    # print(standard_letter)
     new_letter = ' '.join(standard_letter)
     with open(f'./Output/ReadyToSend/{name}.txt', mode='w') as final_letter:
         final_letter.write(new_letter)
