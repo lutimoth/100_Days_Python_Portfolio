@@ -21,9 +21,9 @@ miles_input = Entry(width=20)
 miles_input.grid(column=1,row=0)
 
 def miles_to_km():
-    miles = int(miles_input.get())
-    km = miles * 1.609
-    km_label.config(text=str(km))
+    miles = float(miles_input.get())
+    km = round(miles * 1.609,2)
+    km_convert.config(text=str(km))
 
 convert_button = Button(text="Calculate", command=miles_to_km)
 convert_button.grid(column=1,row=2)
