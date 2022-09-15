@@ -16,12 +16,28 @@ LONG_BREAK_MIN = 20
 
 
 def start_timer():
-    countdown(25*60)
+    global reps
+    reps += 1
+
+    work_sec = WORK_MIN * 60
+    short_break_sec = SHORT_BREAK_MIN * 60
+    long_break_sec = LONG_BREAK_MIN * 60
+
+    if reps % 8 == 0:
+        countdown(long_break_sec)
+    elif reps %2 == 0:
+        countdown(short_break_sec)
+    else:
+        countdown(work_sec)
+        
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
 def countdown(count):
     count_min = count // 60
     count_sec = count % 60
+
+    if count_min == 0:
+        count_min = "00"
 
     if count_sec <= 9:
         count_sec = f"0{count_sec}"
