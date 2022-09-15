@@ -1,3 +1,4 @@
+from msilib.schema import Font
 from tkinter import *
 
 # ---------------------------- CONSTANTS ------------------------------- #
@@ -36,5 +37,8 @@ start_button.grid(column=0, row=2)
 
 reset_button = Button(text="Reset", font=(FONT_NAME,12))
 reset_button.grid(column=2, row=2)
+
+checkmark = Label(text="✓", fg=GREEN, font=(FONT_NAME, 15), bg=YELLOW)
+checkmark.grid(column=1, row=3)
 
 window.mainloop()
