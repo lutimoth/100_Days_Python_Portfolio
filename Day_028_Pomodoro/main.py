@@ -56,6 +56,7 @@ def countdown(count):
 
     canvas.itemconfig(timer_text, text=f"{count_min}:{count_sec}")
     if count > 0:
+        global timer
         timer = window.after(1000, countdown, count-1)
     else:
         start_timer()
@@ -76,9 +77,9 @@ window.config(padx=100, pady=50, bg=YELLOW)
 timer_label = Label(text="Timer", fg= GREEN, font=(FONT_NAME, 42, "bold"), bg=YELLOW)
 timer_label.grid(column=1, row=0)
 
-canvas = Canvas(width=210, height=224, bg=YELLOW, highlightthickness=0)
+canvas = Canvas(width=240, height=224, bg=YELLOW, highlightthickness=0)
 tomato = PhotoImage(file="./tomato.png")
-canvas.create_image(103, 112, image=tomato)
+canvas.create_image(105, 112, image=tomato)
 timer_text = canvas.create_text(103, 130, text="00:00", fill="white", font=(FONT_NAME, 35, "bold"))
 canvas.grid(column=1, row=1)
 
