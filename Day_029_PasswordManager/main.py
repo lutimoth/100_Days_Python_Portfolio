@@ -4,8 +4,13 @@ from tkinter import *
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
+
+    email = email_entry.get()
+    website = website_entry.get()
+    password = password_entry.get()
+
     with open('password.txt', 'a') as pw_text:
-        pw_text.write(f'{email_entry.get()} | {website_entry.get()} | {password_entry.get()}' + '\n')
+        pw_text.write(f'{email} | {website} | {password}\n')
     website_entry.delete(0, END)
     password_entry.delete(0, END)
     website_entry.focus()
