@@ -1,7 +1,9 @@
+from imp import new_module
 from tkinter import *
 from tkinter import messagebox
 from random import choice, randint, shuffle
 import pyperclip
+import json
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 # Automatically generates a password and copies to clipboard
@@ -31,17 +33,27 @@ def save_password():
 
     email = email_entry.get()
     website = website_entry.get()
-    password = password_entry.get()
+    password = password_entry.get()c
+    new_data = {
+        website:
+            {"email": email,
+             "password": password}
+    }
 
     if len(website) == 0 or len(password) == 0:
         messagebox.showinfo(title="Missing Values", message="Don't leave any fields empty!")
     else:
-        is_ok = messagebox.askokcancel(title=website, message=f"These are the details enter:\n Website: {website} \n Email: {email}"
-                                                    f"\nPassword:{password} \n Is it okay to save?")
-        
-        if is_ok:
-            with open('password.txt', 'a') as pw_text:
-                pw_text.write(f'{email} | {website} | {password}\n')
+        try:
+            with open('password.json', 'r') as pw_text:
+                data = json.load(pw_text)
+        except FileNotFoundError:
+            with open('password.json', 'w') as pw_text:
+                json.dump(new_data, pw_text, indent=4)
+        else:
+            data.update(new_data)
+            with open('password.json', 'w') as pw_text:
+                json.dump(data, pw_text, indent=4)
+        finally:
             website_entry.delete(0, END)
             password_entry.delete(0, END)
             website_entry.focus()
