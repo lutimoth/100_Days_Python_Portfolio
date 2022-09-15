@@ -1,4 +1,3 @@
-from msilib.schema import Font
 from tkinter import *
 
 # ---------------------------- CONSTANTS ------------------------------- #
@@ -15,7 +14,18 @@ LONG_BREAK_MIN = 20
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 
+
+def start_timer():
+    countdown(25*60)
+
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- # 
+def countdown(count):
+    count_min = count // 60
+    count_sec = count%60
+    canvas.itemconfig(timer_text, text=count)
+    if count > 0:
+        window.after(1000, countdown, count-1)
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
@@ -29,13 +39,13 @@ timer_text.grid(column=1, row=0)
 canvas = Canvas(width=210, height=224, bg=YELLOW, highlightthickness=0)
 tomato = PhotoImage(file="./tomato.png")
 canvas.create_image(103, 112, image=tomato)
-canvas.create_text(103, 130, text="00:00", fill="white", font=(FONT_NAME, 35, "bold"))
+timer_text = canvas.create_text(103, 130, text="00:00", fill="white", font=(FONT_NAME, 35, "bold"))
 canvas.grid(column=1, row=1)
 
-start_button = Button(text="Start", font=(FONT_NAME, 12))
+start_button = Button(text="Start", font=(FONT_NAME, 12), highlightthickness=0, command=start_timer)
 start_button.grid(column=0, row=2)
 
-reset_button = Button(text="Reset", font=(FONT_NAME,12))
+reset_button = Button(text="Reset", font=(FONT_NAME,12), highlightthickness=0)
 reset_button.grid(column=2, row=2)
 
 checkmark = Label(text="✓", fg=GREEN, font=(FONT_NAME, 15), bg=YELLOW)
