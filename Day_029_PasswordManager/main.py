@@ -26,5 +26,17 @@ email_label.grid(column=0, row=2)
 email_entry = Entry(width=35)
 email_entry.grid(column=1, row=2, columnspan=2)
 
+password_label = Label(text="Password:")
+password_label.grid(column=0, row=3)
+
+password_text = Entry(width=21)
+password_text.grid(column=1,row=3)
+
+password_gen = Button(text="Generate Password")
+password_gen.grid(column=2, row=3)
+
+add_button = Button(text="Add", width=36)
+add_button.grid(column=1, row=4, columnspan=2)
+
 
 window.mainloop()
