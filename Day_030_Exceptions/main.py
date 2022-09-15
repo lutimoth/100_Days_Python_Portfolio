@@ -25,6 +25,22 @@ def password_generator():
     password_entry.insert(END, f'{password}')
     pyperclip.copy(password) 
     
+# ---------------------------- FIND PASSWORD ------------------------------- #    
+def password_search():
+    website = website_entry.get()
+    try:
+        with open("data.json") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found.")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website, message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Error", message=f"No details for {website} exists.")
+        
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 # Saves password after dialogue box confirmation and saves to a text file
 # Will check for empty website and password fields
@@ -74,9 +90,12 @@ canvas.grid(column=1, row=0)
 website_label = Label(text="Website:")
 website_label.grid(column=0, row=1)
 
-website_entry = Entry(width=36)
+website_entry = Entry(width=21)
 website_entry.focus()
-website_entry.grid(column=1, row=1, columnspan=2)
+website_entry.grid(column=1, row=1)
+
+website_search = Button(text="Search", command=password_search)
+website_search.grid(column=2, row=1)
 
 
 # Email or username entry box
