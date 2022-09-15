@@ -4,6 +4,8 @@ from tkinter import *
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
 window.title("Password Generator")
@@ -20,6 +22,7 @@ website_label = Label(text="Website:")
 website_label.grid(column=0, row=1)
 
 website_entry = Entry(width=36)
+website_entry.focus()
 website_entry.grid(column=1, row=1, columnspan=2)
 
 
@@ -29,7 +32,7 @@ email_label.grid(column=0, row=2)
 
 email_entry = Entry(width=36)
 email_entry.grid(column=1, row=2, columnspan=2)
-
+email_entry.insert(0, "lutimoth@usc.edu")
 
 # Password Info
 password_label = Label(text="Password:")
