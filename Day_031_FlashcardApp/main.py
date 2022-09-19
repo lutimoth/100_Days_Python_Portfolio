@@ -1,9 +1,13 @@
 import pandas as pd
 from tkinter import *
+from collections import defaultdict
 
 # ---------------------------- Constants and Word List ------------------------------- # 
 
-word_list = pd.read_csv('./data/french_words.csv')
+try:
+    word_list = pd.read_csv('./data/not_learned.csv')
+except FileNotFoundError:
+    word_list = pd.read_csv('./data/french_words.csv')
 
 BACKGROUND_COLOR = "#B1DDC6"
 FONT_NAME = "Ariel"
@@ -18,16 +22,34 @@ timer = None
 # ---------------------------- Word Generation Mechanism ------------------------------- # 
 french_word = ""
 english_word = ""
+learned_dict = defaultdict(list)
+learned_french = []
+learned_english = []
 
 def random_words():
-    global words
+    global words, french_word, english_word
     words = word_list.sample()
     canvas.itemconfig(card_image, image=card_front_image)
     french_word = words.iloc[0]['French']
     canvas.itemconfig(language_text, text="French", fill = 'black')
     canvas.itemconfig(word_text, text=french_word, fill = 'black')
     start_timer()
-    return french_word
+    return french_word, english_word
+
+def correct_answer():
+    word_list.drop(word_list[word_list['French'] == french_word].index.values,inplace=True)
+    data = word_list
+    data.to_csv("./data/not_learned_yet.csv")
+    random_words()
+    return learned_dict
+    
+
+# def on_close():
+#     learned = pd.DataFrame(learned_dict, columns=['French', 'English'])
+#     not_learned = word_list[word_list.columns.difference(learned)]
+#     learned.to_csv('./data/learned.csv')
+#     not_learned.to_csv('./data/not_learned.csv')
+#     window.destroy()
 
 # ---------------------------- Flash Card Flipping Mech ------------------------------- # 
 def start_timer():
@@ -55,11 +77,12 @@ canvas.grid(row=0, column=0, columnspan=2)
 
 
 right_image = PhotoImage(file=RIGHT)
-right_button = Button(image=right_image, highlightthickness=0, command=random_words)
+right_button = Button(image=right_image, highlightthickness=0, command=correct_answer)
 right_button.grid(row=1, column=1)
 
 wrong_image = PhotoImage(file=WRONG)
 wrong_button = Button(image=wrong_image, highlightthickness=0, command=random_words)
 wrong_button.grid(row=1,column=0)
 
+# window.protocol("WM_DELETE_WINDOW", on_close)
 window.mainloop()
