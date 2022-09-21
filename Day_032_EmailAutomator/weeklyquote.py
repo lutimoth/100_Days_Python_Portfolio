@@ -11,11 +11,12 @@ password = os.getenv('PASSWORD')
 
 today = dt.datetime.now()
 
-if today.weekday() == 1:
+if today.weekday() == 0:
     with open('quotes.txt') as quotes:
         quote_list = quotes.readlines()
         quote_list = [line.rstrip() for line in quote_list]
         today_quote = random.choice(quote_list)
+        print(today_quote)
 
     with smtplib.SMTP("smtp.gmail.com") as connection:
         connection.starttls()
