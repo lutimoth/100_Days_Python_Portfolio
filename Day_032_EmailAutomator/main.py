@@ -10,16 +10,8 @@ load_dotenv()
 my_email = "tlupython@gmail.com"
 password = os.getenv('PASSWORD')
 today = pd.Timestamp.now().strftime('%m-%d')
-# 1. Update the birthdays.csv
-birthdays = pd.read_csv('birthdays.csv')
 
-birthdays['birthdate'] = birthdays.apply(lambda x:dt.datetime.strptime("{0} {1}".format(x['month'], x['day']), "%m %d"),axis=1)
-birthdays.to_csv('test_birthday.csv')
-# 2. Check if today matches a birthday in the birthdays.csv
-# 3. If step 2 is true, pick a random letter from letter templates and replace the [NAME] with the person's actual name from birthdays.csv
-today_df = birthdays.loc[birthdays['birthdate'].dt.strftime('%m-%d').eq(today)]
-# print(today_df)
-
+# Function which will help us rewrite letter template
 def letter_fixer(letter_number):
     global final_letter
     with open(f'./letter_templates/letter_{letter_number}.txt') as letter:
@@ -27,6 +19,20 @@ def letter_fixer(letter_number):
     standard_letter[0] = standard_letter[0].replace('[NAME]', name)
     final_letter = ' '.join(standard_letter)
     return final_letter
+
+# Read the CSV of all birthdays
+birthdays = pd.read_csv('birthdays.csv')
+
+# Convert separate month and days into singular birthdate
+birthdays['birthdate'] = birthdays.apply(lambda x:dt.datetime.strptime("{0} {1}".format(x['month'], x['day']), "%m %d"),axis=1)
+birthdays.to_csv('test_birthday.csv')
+
+
+
+# Filter dataframe for only birthdays which match today
+today_df = birthdays.loc[birthdays['birthdate'].dt.strftime('%m-%d').eq(today)]
+
+
 
 for index, people in today_df.iterrows():
     letter = random.randint(0,2)
@@ -37,7 +43,6 @@ for index, people in today_df.iterrows():
         letter_fixer(2)
     else:
         letter_fixer(3)
-
 
 # 4. Send the letter generated in step 3 to that person's email address.
     with smtplib.SMTP("smtp.gmail.com") as connection:
