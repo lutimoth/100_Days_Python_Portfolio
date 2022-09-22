@@ -34,12 +34,22 @@ def iss_close():
         return False
 
 # and it is currently dark
+def check_night():
+    if time_now.hour >= sunset or time_now.hour <= sunrise:
+        return True
+    else:
+        return False
 
-if iss_close():
-    print("ISS is close")
-else:
-    print("ISS is not close")
 # Then send me an email to tell me to look up.
+
+if iss_close() and check_night():
+    print("It's dark and ISS is close")
+elif iss_close():
+    print("ISS close but not dark")
+elif check_night():
+    print("It's night but ISS is not close")
+else:
+    print("ISS is not close and it's not dark")
 # BONUS: run the code every 60 seconds.
 
 
