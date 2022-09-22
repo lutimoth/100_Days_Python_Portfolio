@@ -4,10 +4,10 @@ import requests
 def get_quote():
     r = requests.get(url='https://api.kanye.rest/')
     quote = r.json()['quote']
-    canvas.itemconfig(quote_text,text = quote)
-    #Write your code here.
-
-
+    if len(quote) < 75:
+        canvas.itemconfig(quote_text,text = quote)
+    else: 
+        canvas.itemconfig(quote_text,text = quote, font=("Arial", 20, "bold"))
 
 window = Tk()
 window.title("Kanye Says...")
