@@ -1,6 +1,7 @@
 from tkinter import *
 import requests
 
+
 def get_quote():
     r = requests.get(url='https://api.kanye.rest/')
     quote = r.json()['quote']

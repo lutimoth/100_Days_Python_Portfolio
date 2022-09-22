@@ -1,5 +1,13 @@
 import requests
 from datetime import datetime
+import smtplib
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+my_email = "tlupython@gmail.com"
+password = os.getenv('PASSWORD')
 
 MY_LAT = 34.069210 # Your latitude
 MY_LONG = -118.009360 # Your longitude
@@ -43,7 +51,13 @@ def check_night():
 # Then send me an email to tell me to look up.
 
 if iss_close() and check_night():
-    print("It's dark and ISS is close")
+     with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        connection.login(user=my_email, password=password)
+        connection.sendmail(
+            from_addr=my_email, 
+            to_addrs='lutimoth@gmail.com', 
+            msg=f"Subject: Quote of the Day\n\n {today_quote}")
 elif iss_close():
     print("ISS close but not dark")
 elif check_night():
