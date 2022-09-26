@@ -8,5 +8,6 @@ Topics covered thus far are:
 - Fundamentals of Python
 - Version updating and forking
 - API usage 
+- Using Turtle and creating GUIs with TKInter
 - JSON in Python
 - Raising and understanding Error Messages
