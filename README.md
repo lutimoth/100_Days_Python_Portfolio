@@ -6,6 +6,7 @@ As I go through the Udemy course, I will be updating this repo with the appropri
 
 Topics covered thus far are:
 - Fundamentals of Python
+- Version updating and forking
 - API usage 
 - JSON in Python
 - Raising and understanding Error Messages
