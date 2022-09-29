@@ -1,11 +1,11 @@
 import requests
 import os
 from dotenv import load_dotenv
+from twilio.rest import Client
 
 load_dotenv()
 
 api_key = os.getenv('APIKEY')
-print(api_key)
 
 OWM_Endpoint = "https://api.openweathermap.org/data/3.0/onecall?"
 
@@ -17,9 +17,7 @@ weather_params = {
 }
 
 response = requests.get(OWM_Endpoint, params=weather_params)
-print(response.url)
 weather_data = response.json()
-print(weather_data)
 
 weather_slice = weather_data['hourly'][:12]
 
