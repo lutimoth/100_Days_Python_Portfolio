@@ -1,4 +1,4 @@
-# 100_Days_Python_Portfolio
+# 100 Foundational Python Projects
 
 This is my repo for the 100 days of code: Python by Dr. Angela Yu.
 
