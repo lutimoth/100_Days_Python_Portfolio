@@ -1,14 +1,43 @@
+import os
+from dotenv import load_dotenv
+from datetime import datetime, date, timedelta
+import requests
+
+load_dotenv()
+
+alpha_key = os.getenv('ALPHA_KEY')
+
 STOCK = "TSLA"
 COMPANY_NAME = "Tesla Inc"
+CURRENT_DAY = date.today()
+YESTERDAY = CURRENT_DAY - timedelta(days=1)
 
 ## STEP 1: Use https://www.alphavantage.co
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
+def price_change(today, yesterday):
+    open = float(today['1. open'])
+    close = float(yesterday['4. close'])
+    change = (abs(open-close)/close) * 100
+    if change > 5:
+        pass
+    return change
+
+alpha_url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={STOCK}&apikey={alpha_key}'
+stock_request = requests.get(alpha_url)
+data = stock_request.json()['Time Series (Daily)']
+today_data = data[CURRENT_DAY.strftime('%Y-%m-%d')]
+yesterday_data = data[YESTERDAY.strftime('%Y-%m-%d')]
+
+
+
+print(price_change(today_data, yesterday_data))
 
 ## STEP 2: Use https://newsapi.org
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
 ## STEP 3: Use https://www.twilio.com
 # Send a seperate message with the percentage change and each article's title and description to your phone number. 
+
 
 
 #Optional: Format the SMS message like this: 
