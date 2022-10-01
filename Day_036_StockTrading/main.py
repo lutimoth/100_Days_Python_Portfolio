@@ -34,9 +34,9 @@ print(price_change(today_data, yesterday_data))
 ## STEP 2: Use https://newsapi.org
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
-news_url = (f'https://newsapi.org/v2/everything?q={COMPANY_NAME}&apiKey={news_key}')
+news_url = (f'https://newsapi.org/v2/everything?q={COMPANY_NAME}&apiKey={news_key}&language=en')
 news_request = requests.get(news_url)
-news_data = news_request.json()
+news_data = news_request.json()['articles'][:3]
 print(news_data)
 
 ## STEP 3: Use https://www.twilio.com
