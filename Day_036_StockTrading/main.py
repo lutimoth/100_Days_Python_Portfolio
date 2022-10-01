@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from datetime import datetime, date, timedelta
 import requests
+from collections import defaultdict
 
 load_dotenv()
 
@@ -20,7 +21,7 @@ def price_change(today, yesterday):
     close = float(yesterday['4. close'])
     change = (abs(open-close)/close) * 100
     if change > 5:
-        pass
+        get_news()
     return change
 
 alpha_url = (f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={STOCK}&apikey={alpha_key}')
@@ -35,9 +36,21 @@ print(price_change(today_data, yesterday_data))
 # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
 
 news_url = (f'https://newsapi.org/v2/everything?q={COMPANY_NAME}&apiKey={news_key}&language=en')
-news_request = requests.get(news_url)
-news_data = news_request.json()['articles'][:3]
-print(news_data)
+
+def get_news():
+    news_info = {}
+    news_request = requests.get(news_url)
+    news_data = news_request.json()['articles'][:3]
+    #print(news_data)
+    for article in news_data:
+        if article['source']['name'] not in news_info:
+            news_info[article['source']['name']] = [article['title']]
+        else:
+            news_info[article['source']['name']] += [article['title']]
+        #print(news_info)
+    return news_info
+
+print(get_news())
 
 ## STEP 3: Use https://www.twilio.com
 # Send a seperate message with the percentage change and each article's title and description to your phone number. 
