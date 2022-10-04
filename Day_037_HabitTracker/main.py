@@ -46,9 +46,12 @@ headers ={
 
 
 #How to post a point to the tracker
+
+commits = input("How many commits did you make today?:")
+
 post_params = {
     "date": CURRENT_DAY,
-    "quantity":"10"
+    "quantity": commits
 }
 
 post_graph = requests.post(url=graph_endpoint, json=post_params,headers=headers)
