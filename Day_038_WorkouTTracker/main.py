@@ -5,6 +5,12 @@ import requests
 
 load_dotenv()
 
+GENDER = "male"
+WEIGHT_KG = 115
+HEIGHT_CM = 180
+AGE = 28
+
+
 NUTRI_ID = os.getenv("NUTRI_ID")
 NUTRI_KEY = os.getenv("NUTRI_KEY")
 NUTRI_URL = "https://trackapi.nutritionix.com/v2/natural/exercise"
@@ -19,27 +25,32 @@ header = {
 
 nutri_params = {
     "query":input("What was your exercise? "),
-    "gender":"male",
-    "weight_kg":110,
-    "height_cm":180,
-    "age":28
+    "gender": GENDER,
+    "weight_kg": WEIGHT_KG,
+    "height_cm": HEIGHT_CM,
+    "age": AGE
 }
 
-exercise = requests.post(url=NUTRI_URL, json=nutri_params, headers=header)
+nutri_response = requests.post(url=NUTRI_URL, json=nutri_params, headers=header)
+exercises = nutri_response.json()
 
-print(exercise.text)
+print(exercises)
 
-now = datetime.now()
+today_date = datetime.now().strftime("%d/%m/%Y")
+now_time = datetime.now().strftime("%X")
 
-# sheety_params = {
-#     "workouts":{
-#          "date": now.strftime("%Y-%m-%d"),
-#          "time": now.strftime("%H:%M")
-#          "exercise":
-#          "duration":
-#          "calories":
-#     }
-   
-# }
 
-# sheet_add = requests.post(url=SHEETY_URL, jso=sheety_params)
+for exercise in exercises["exercises"]:
+    sheet_inputs = {
+        "workout": {
+            "date": today_date,
+            "time": now_time,
+            "exercise": exercise["name"].title(),
+            "duration": exercise["duration_min"],
+            "calories": exercise["nf_calories"]
+        }
+    }
+
+    sheet_response = requests.post(SHEETY_URL, json=sheet_inputs)
+
+    print(sheet_response.text)
