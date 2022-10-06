@@ -7,6 +7,7 @@ load_dotenv()
 SHEETY_ID = os.getenv("SHEETY_ID")
 
 SHEETY_PRICES_ENDPOINT = f"https://api.sheety.co/{SHEETY_ID}/flightDeals/prices"
+SHEETY_USERS_ENDPOINT = f"https://api.sheety.co/{SHEETY_ID}/flightDeals/users"
 
 
 class DataManager:
@@ -19,7 +20,7 @@ class DataManager:
         data = response.json()
         self.destination_data = data["prices"]
         return self.destination_data
-    
+
     def update_destination_codes(self):
         for city in self.destination_data:
             new_data = {
@@ -32,3 +33,10 @@ class DataManager:
                 json=new_data
             )
             print(response.text)
+
+    def get_customer_emails(self):
+        customers_endpoint = SHEETY_USERS_ENDPOINT
+        response = requests.get(url=customers_endpoint)
+        data = response.json()
+        self.customer_data = data["users"]
+        return self.customer_data
