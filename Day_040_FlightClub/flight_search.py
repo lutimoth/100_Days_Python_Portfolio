@@ -12,32 +12,24 @@ TEQUILA_API_KEY = os.getenv("TEQUILA_API_KEY")
 
 class FlightSearch:
 
-    def __init__(self):
-        self.city_codes = []
-
-    def get_destination_codes(self, city_names):
-        print("get destination codes triggered")
+    def get_destination_code(self, city_name):
         location_endpoint = f"{TEQUILA_ENDPOINT}/locations/query"
-        headers = {"apikey": os.environ["TEQUILA_API_KEY"]}
-        for city in city_names:
-            query = {"term": city, "location_types": "city"}
-            response = requests.get(url=location_endpoint, headers=headers, params=query)
-            results = response.json()["locations"]
-            code = results[0]["code"]
-            self.city_codes.append(code)
-
-        return self.city_codes
+        headers = {"apikey": TEQUILA_API_KEY}
+        query = {"term": city_name, "location_types": "city"}
+        response = requests.get(url=location_endpoint, headers=headers, params=query)
+        results = response.json()["locations"]
+        code = results[0]["code"]
+        return code
 
     def check_flights(self, origin_city_code, destination_city_code, from_time, to_time):
-        print(f"Check flights triggered for {destination_city_code}")
-        headers = {"apikey": os.environ["TEQUILA_API_KEY"]}
+        headers = {"apikey": TEQUILA_API_KEY}
         query = {
             "fly_from": origin_city_code,
             "fly_to": destination_city_code,
             "date_from": from_time.strftime("%d/%m/%Y"),
             "date_to": to_time.strftime("%d/%m/%Y"),
             "nights_in_dst_from": 7,
-            "nights_in_dst_to": 30,
+            "nights_in_dst_to": 28,
             "flight_type": "round",
             "one_for_city": 1,
             "max_stopovers": 0,
@@ -49,7 +41,6 @@ class FlightSearch:
             headers=headers,
             params=query,
         )
-
         try:
             data = response.json()["data"][0]
         except IndexError:
@@ -60,7 +51,7 @@ class FlightSearch:
                 params=query,
             )
             data = response.json()["data"][0]
-            #pprint(data)
+            pprint(data)
             flight_data = FlightData(
                 price=data["price"],
                 origin_city=data["route"][0]["cityFrom"],
@@ -73,7 +64,6 @@ class FlightSearch:
                 via_city=data["route"][0]["cityTo"]
             )
             return flight_data
-            
         else:
             flight_data = FlightData(
                 price=data["price"],
