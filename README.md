@@ -12,3 +12,4 @@ Topics covered thus far are:
 - JSON in Python
 - SMS with Twilio and emails using SMTP
 - Raising and understanding Error Messages
+- Foundational Web Development with Python
