@@ -6,10 +6,13 @@ As I go through the Udemy course, I will be updating this repo with the appropri
 
 Topics covered thus far are:
 - Fundamentals of Python
+- OOP concepts
 - Version updating and forking
 - API usage 
 - Using Turtle and creating GUIs with TKInter
 - JSON in Python
 - SMS with Twilio and emails using SMTP
 - Raising and understanding Error Messages
+- Flight tracker API and price drop alerts
 - Foundational Web Development with Python
+
