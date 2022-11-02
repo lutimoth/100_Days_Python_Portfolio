@@ -15,4 +15,5 @@ Topics covered thus far are:
 - Raising and understanding Error Messages
 - Flight tracker API and price drop alerts
 - Foundational Web Development with Python
-
+- Webscraping with BeautifulSoup
+  
