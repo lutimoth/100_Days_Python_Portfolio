@@ -7,5 +7,7 @@ billboard = requests.get(f'https://www.billboard.com/charts/hot-100/{date}/')
 
 soup = BeautifulSoup(billboard.text, 'html.parser')
 
-songlist = soup.find_all(class_="o-chart-results-list-row-container")
-print(songlist)
+songlist = soup.select("li ul li h3")
+
+song_names = [song.get_text(strip=True) for song in songlist]
+print(song_names)
