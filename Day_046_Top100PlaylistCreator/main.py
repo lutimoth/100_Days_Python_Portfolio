@@ -50,9 +50,14 @@ for song in song_info:
 
 ### === PLAYLIST CREATION === ###
 
-sp.user_playlist_create(user=user_id, name=f"Billboard {date} Top 100 Songs", public=True)
-
+new_playlist_name = f"Billboard {date} Top 100 Songs"
 playlists = sp.user_playlists(user=user_id)
-playlist_id = playlists['items'][0]['id']
 
-sp.user_playlist_add_tracks(user=user_id, playlist_id=playlist_id, tracks=song_uri)
+old_playlists = [playlist['name'] for playlist in playlists['items']]
+
+if new_playlist_name in old_playlists:
+    print("Playlist already exists!")
+else:
+    sp.user_playlist_create(user=user_id, name=new_playlist_name, public=True)
+    playlist_id = playlists['items'][0]['id']
+    sp.user_playlist_add_tracks(user=user_id, playlist_id=playlist_id, tracks=song_uri)
