@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
+import os
+from dotenv import load_dotenv
 
 date = input('Which year do you want to travel to? Must in in format YYYY-MM-DD: ')
 
