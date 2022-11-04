@@ -47,7 +47,9 @@ if new_playlist_name in old_playlists:
     print("Playlist already exists!")
 else:
     sp.user_playlist_create(user=user_id, name=new_playlist_name, public=True)
-
+    new_playlists = sp.user_playlists(user=user_id)
+    playlist_id = new_playlists['items'][0]['id']
+    
     song_uri = []  # Empty list for track URIs
     for song in song_info:
         try:  
@@ -55,8 +57,6 @@ else:
         except IndexError:  # Some songs may not exist, skip these
             continue 
     
-    new_playlists = sp.user_playlists(user=user_id)
-    playlist_id = new_playlists['items'][0]['id']
     sp.user_playlist_add_tracks(user=user_id, playlist_id=playlist_id, tracks=song_uri)
 
 # print(song_uri)
