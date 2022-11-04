@@ -36,22 +36,10 @@ song_names = [song.get_text(strip=True) for song in songlist]  # Get song names 
 
 song_info = [sp.search(q='track:'+song, type='track') for song in song_names]  # Use spotipy to search for songs
 
-song_uri = []  # Empty list for track URIs
-for song in song_info:
-    try:  
-        song_uri.append(song['tracks']['items'][0]['uri']) 
-    except IndexError:  # Some songs may not exist, skip these
-        continue 
-
-# print(song_uri)
-# print(song_uri[0])
-# print(sp.track('spotify:track:7A0apkTSTvMbSI7yplcmlh')['name'])
-
-
-### === PLAYLIST CREATION === ###
-
 new_playlist_name = f"Billboard {date} Top 100 Songs"
 playlists = sp.user_playlists(user=user_id)
+
+### === PLAYLIST CREATION === ###
 
 old_playlists = [playlist['name'] for playlist in playlists['items']]
 
@@ -59,5 +47,22 @@ if new_playlist_name in old_playlists:
     print("Playlist already exists!")
 else:
     sp.user_playlist_create(user=user_id, name=new_playlist_name, public=True)
-    playlist_id = playlists['items'][0]['id']
+
+    song_uri = []  # Empty list for track URIs
+    for song in song_info:
+        try:  
+            song_uri.append(song['tracks']['items'][0]['uri']) 
+        except IndexError:  # Some songs may not exist, skip these
+            continue 
+    
+    new_playlists = sp.user_playlists(user=user_id)
+    playlist_id = new_playlists['items'][0]['id']
     sp.user_playlist_add_tracks(user=user_id, playlist_id=playlist_id, tracks=song_uri)
+
+# print(song_uri)
+# print(song_uri[0])
+# print(sp.track('spotify:track:7A0apkTSTvMbSI7yplcmlh')['name'])
+
+
+
+
