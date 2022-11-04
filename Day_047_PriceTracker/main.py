@@ -2,8 +2,6 @@ import requests
 import lxml
 from bs4 import BeautifulSoup
 
-lxml
-
 ACCEPT_LANGUAGE = 'en-US,en;q=0.9,zh-TW;q=0.8,zh;q=0.7'
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
 
@@ -15,6 +13,6 @@ headers = {
 }
 
 result = requests.get(URL, headers=headers)
-soup = BeautifulSoup(result, 'lxml')
+soup = BeautifulSoup(result.text, "lxml")
 
 print(soup)
