@@ -14,5 +14,7 @@ headers = {
 
 result = requests.get(URL, headers=headers)
 soup = BeautifulSoup(result.text, "lxml")
+price_html = soup.find(class_="a-price-whole")
+price = int(price_html.get_text().strip('.'))
 
-print(soup)
+print(price)
