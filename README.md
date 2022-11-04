@@ -16,4 +16,6 @@ Topics covered thus far are:
 - Flight tracker API and price drop alerts
 - Foundational Web Development with Python
 - Webscraping with BeautifulSoup
+  - Make playlists based on Billboard Top 100 Website
+  - Amazon price tracker with email notification
   
