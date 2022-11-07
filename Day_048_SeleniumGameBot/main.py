@@ -36,7 +36,7 @@ items = driver.find_elements(By.CSS_SELECTOR, "#store div")
 item_ids = [item.get_attribute("id") for item in items]
 
 timeout = time.time() + 5
-five_min = time.time() + 60*5 # 5minutes
+five_min = time.time() + 60*5 # 5minutes, adjust this for how long you want to play.
 
 while True:
     cookie.click()
@@ -79,7 +79,7 @@ while True:
 
         driver.find_element(By.ID, to_purchase_id).click()
         
-        #Add another 5 seconds until the next check
+        #Add another 5 seconds until the next check, keep this going
         timeout = time.time() + 5
 
     #After 5 minutes stop the bot and check the cookies per second count.
