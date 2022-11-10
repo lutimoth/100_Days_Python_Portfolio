@@ -54,23 +54,28 @@ def job_hunt():
             easy_text = driver.find_element(By.XPATH, "//span[text()='Submit application']")
             #print(easy_text)
 
-            if easy_text.text == 'Submit application':
-                #print(f"The text is {easy_text}")
-                submit_button = driver.find_element(By.XPATH, "//*[@aria-label='Submit application']") 
-                submit_button.click()
-                time.sleep(2)
-                done_button = driver.find_element(By.CLASS_NAME, 'artdeco-button--primary')
-                done_button.click()
-                time.sleep(2)
-            else:
-                cancel_button = driver.find_element(By.CLASS_NAME, 'artdeco-modal__dismiss')
-                cancel_button.click()
-                time.sleep(2)
-                discard_button = driver.find_element(By.CSS_SELECTOR, 'button.artdeco-modal__confirm-dialog-btn.artdeco-button--secondary')
-                discard_button.click()
-                time.sleep(2)
+            easy_text.text == 'Submit application'
+            #print(f"The text is {easy_text}")
+            submit_button = driver.find_element(By.XPATH, "//*[@aria-label='Submit application']") 
+            submit_button.click()
+            time.sleep(2)
+            done_button = driver.find_element(By.CLASS_NAME, 'artdeco-button--primary')
+            done_button.click()
+            time.sleep(2)
+            # else:
+            #     cancel_button = driver.find_element(By.XPATH, "//*[@aria-label='Dismiss']")
+            #     cancel_button.click()
+            #     time.sleep(2)
+            #     discard_button = driver.find_element(By.XPATH, "//*[@data-control-name='discard_application_confirm_btn']")
+            #     discard_button.click()
+            #     time.sleep(2)
         except NoSuchElementException:
-            continue
+            cancel_button = driver.find_element(By.XPATH, "//*[@aria-label='Dismiss']")
+            cancel_button.click()
+            time.sleep(2)
+            discard_button = driver.find_element(By.XPATH, "//*[@data-control-name='discard_application_confirm_btn']")
+            discard_button.click()
+            time.sleep(2)
 
 page_numbers = driver.find_elements(By.CLASS_NAME, 'artdeco-pagination__indicator')
 last_number = int(page_numbers[-1].text)
