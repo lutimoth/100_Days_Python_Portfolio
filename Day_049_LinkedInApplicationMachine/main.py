@@ -60,3 +60,7 @@ for job in jobs:
     else:
         cancel_button = driver.find_element(By.CLASS_NAME, 'artdeco-modal__dismiss')
         cancel_button.click()
+        time.sleep(2)
+        discard_button = driver.find_element(By.CSS_SELECTOR, 'button.artdeco-modal__confirm-dialog-btn.artdeco-button--secondary')
+        discard_button.click()
+        time.sleep(2)
