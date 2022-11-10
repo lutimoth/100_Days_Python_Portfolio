@@ -44,23 +44,27 @@ jobs = driver.find_elements(By.CLASS_NAME, 'job-card-container')
 for job in jobs:
     job.click()
     time.sleep(3)
-    easy_apply = driver.find_element(By.CLASS_NAME, 'jobs-apply-button')
-    easy_apply.click()
-    time.sleep(5)
-    
-    easy_text = driver.find_element(By.CLASS_NAME, 'artdeco-button__text')
-    print(easy_text.text)
-    
-    if easy_text.text == 'Submit Application':
-        submit_button = driver.find_element(By.CLASS_NAME, 'artdeco-button--primary')
-        submit_button.click()
+    try:
+        easy_apply = driver.find_element(By.CLASS_NAME, 'jobs-apply-button')
+        easy_apply.click()
         time.sleep(5)
-        submit_button.click()
-        time.sleep(5)
-    else:
-        cancel_button = driver.find_element(By.CLASS_NAME, 'artdeco-modal__dismiss')
-        cancel_button.click()
-        time.sleep(2)
-        discard_button = driver.find_element(By.CSS_SELECTOR, 'button.artdeco-modal__confirm-dialog-btn.artdeco-button--secondary')
-        discard_button.click()
-        time.sleep(2)
+        
+        easy_text = driver.find_element(By.CLASS_NAME, 'artdeco-button__text')
+        print(easy_text.text)
+        
+        if easy_text.text == 'Submit Application':
+            submit_button = driver.find_element(By.CLASS_NAME, 'artdeco-button--primary')
+            submit_button.click()
+            time.sleep(5)
+            done_button = driver.find_element(By.CLASS_NAME, 'artdeco-button--primary')
+            done_button.click()
+            time.sleep(5)
+        else:
+            cancel_button = driver.find_element(By.CLASS_NAME, 'artdeco-modal__dismiss')
+            cancel_button.click()
+            time.sleep(2)
+            discard_button = driver.find_element(By.CSS_SELECTOR, 'button.artdeco-modal__confirm-dialog-btn.artdeco-button--secondary')
+            discard_button.click()
+            time.sleep(2)
+    except NoSuchElementException:
+        continue
