@@ -47,13 +47,16 @@ for job in jobs:
     easy_apply = driver.find_element(By.CLASS_NAME, 'jobs-apply-button')
     easy_apply.click()
     time.sleep(5)
+    
     easy_text = driver.find_element(By.CLASS_NAME, 'artdeco-button__text')
+    print(easy_text.text)
     
     if easy_text.text == 'Submit Application':
-        submit_button = driver.find_element(By.CLASS_NAME, 'artdeco-button')
+        submit_button = driver.find_element(By.CLASS_NAME, 'artdeco-button--primary')
         submit_button.click()
         time.sleep(5)
         submit_button.click()
         time.sleep(5)
     else:
-        cancel_button = driver.find_element(By.CLASS_NAME, 'artdeco-modal__dismissal')
+        cancel_button = driver.find_element(By.CLASS_NAME, 'artdeco-modal__dismiss')
+        cancel_button.click()
