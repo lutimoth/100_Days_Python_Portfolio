@@ -16,7 +16,7 @@ PW = os.getenv('PASSWORD')
 chrome_options = Options()
 chrome_options.add_experimental_option("detach", True)
 
-chromedrive_directory = "C:/Users/lutimoth/Documents/chromedriver/chromedriver.exe"
+chromedrive_directory = os.getenv('CHROME_PATH')
 driver = webdriver.Chrome(service=Service(chromedrive_directory))
 
 driver.get(URL)
