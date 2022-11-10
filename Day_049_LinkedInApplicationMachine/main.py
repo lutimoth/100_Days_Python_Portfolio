@@ -78,7 +78,7 @@ def job_hunt():
                 time.sleep(3)
                 jobs = driver.find_elements(By.CLASS_NAME, 'job-card-container')
                 time.sleep(1)
-        ActionChains(driver).move_to_element(job).pause(1).scroll_by_amount(0,300).perform()
+        ActionChains(driver).move_to_element(job).pause(1).scroll(x=200, y=700, delta_x=0, delta_y=150).perform()
         
 
 hunting = True
