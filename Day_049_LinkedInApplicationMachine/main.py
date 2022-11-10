@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException, StaleElementReferenceException
 from dotenv import load_dotenv
 import os
 import time
@@ -58,7 +58,7 @@ def job_hunt():
             #print(f"The text is {easy_text}")
             submit_button = driver.find_element(By.XPATH, "//*[@aria-label='Submit application']") 
             submit_button.click()
-            time.sleep(2)
+            time.sleep(3)
             done_button = driver.find_element(By.CLASS_NAME, 'artdeco-button--primary')
             done_button.click()
             time.sleep(2)
@@ -70,12 +70,17 @@ def job_hunt():
             #     discard_button.click()
             #     time.sleep(2)
         except NoSuchElementException:
-            cancel_button = driver.find_element(By.XPATH, "//*[@aria-label='Dismiss']")
-            cancel_button.click()
-            time.sleep(2)
-            discard_button = driver.find_element(By.XPATH, "//*[@data-control-name='discard_application_confirm_btn']")
-            discard_button.click()
-            time.sleep(2)
+            try:
+                cancel_button = driver.find_element(By.XPATH, "//*[@aria-label='Dismiss']")
+                cancel_button.click()
+                time.sleep(2)
+                discard_button = driver.find_element(By.XPATH, "//*[@data-control-name='discard_application_confirm_btn']")
+                discard_button.click()
+                time.sleep(2)
+            except ElementNotInteractableException:
+                continue 
+            except StaleElementReferenceException:
+                job_hunt()
 
 page_numbers = driver.find_elements(By.CLASS_NAME, 'artdeco-pagination__indicator')
 last_number = int(page_numbers[-1].text)
