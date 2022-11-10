@@ -62,6 +62,8 @@ def job_hunt():
             done_button = driver.find_element(By.CLASS_NAME, 'artdeco-button--primary')
             done_button.click()
             time.sleep(2)
+            driver.refresh()
+            time.sleep(3)
             # else:
             #     cancel_button = driver.find_element(By.XPATH, "//*[@aria-label='Dismiss']")
             #     cancel_button.click()
@@ -76,11 +78,9 @@ def job_hunt():
                 time.sleep(2)
                 discard_button = driver.find_element(By.XPATH, "//*[@data-control-name='discard_application_confirm_btn']")
                 discard_button.click()
-                time.sleep(2)
+                time.sleep(3)
             except ElementNotInteractableException:
                 continue 
-            except StaleElementReferenceException:
-                job_hunt()
 
 page_numbers = driver.find_elements(By.CLASS_NAME, 'artdeco-pagination__indicator')
 last_number = int(page_numbers[-1].text)
