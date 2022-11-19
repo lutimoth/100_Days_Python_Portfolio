@@ -9,5 +9,4 @@ plugins:
   - jemoji
   - jekyll-include-cache
   
-  title: ""
-  feed: False
+title: ""
