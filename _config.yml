@@ -1,4 +1,6 @@
 remote_theme: mmistakes/minimal-mistakes
+title: ""
+
 
 plugins:
   - jekyll-paginate
