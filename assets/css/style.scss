@@ -1,5 +1,9 @@
 @import "{{ site.theme }}";
 
+.masthead {
+  display: none;
+}
+
 header {
   display: none;
 }
