@@ -18,4 +18,4 @@ Topics covered thus far are:
 - Webscraping with BeautifulSoup
   - Make playlists based on Billboard Top 100 Website
   - Amazon price tracker with email notification
-  
+- Deploying web apps through Flask
