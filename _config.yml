@@ -10,3 +10,4 @@ plugins:
   - jekyll-include-cache
   
   title: ""
+  feed: False
