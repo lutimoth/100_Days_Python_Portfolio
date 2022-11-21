@@ -1,4 +1,6 @@
-# 100 Foundational Python Projects
+<style> h1 { color: green; } </style>
+
+<h1># 100 Foundational Python Projects</h1>
 
 This is my repo for the 100 days of code: Python by Dr. Angela Yu on Udemy
 
