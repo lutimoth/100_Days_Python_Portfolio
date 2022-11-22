@@ -1,5 +1,9 @@
 /* This will be the main css */
 
+header {
+    display: none;
+}
+
 body {
     background-color: aquamarine;
 }
@@ -13,6 +17,3 @@ table, thead, tr, td {
     border-collapse: collapse;
 }
 
-header {
-    display: none;
-}
