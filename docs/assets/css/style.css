@@ -7,10 +7,6 @@ h1 {
     color: green;
 }
 
-p {
-    color: red;
-}
-
 table, thead, tr, td {
     border: 1px solid black;
     border-collapse: collapse;
