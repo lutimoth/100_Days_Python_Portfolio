@@ -1,4 +1,6 @@
 ---
+layout: page
+title: "Introductory Python Projects"
 permalink: /intro_to_python.html
 ---
 
