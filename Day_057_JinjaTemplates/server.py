@@ -12,9 +12,11 @@ def home():
 @app.route(f'/guess/<name>')
 def guess(name):
     year = datetime.now().year
-    gender = requests.get('https://api.genderize.io', params={'name': name})
-    age = requests.get('https://api.agify.io', params={'name': name})
-    return render_template("guess.html", current_year = year)
+    gender_result = requests.get('https://api.genderize.io', params={'name': name})
+    gender = gender_result.json()['gender']
+    age_result = requests.get('https://api.agify.io', params={'name': name})
+    age = age_result.json()['age']
+    return render_template("guess.html", current_year = year, name=name, gender=gender, age=age)
 
 
 if __name__ == "__main__":
