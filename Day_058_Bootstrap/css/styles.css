@@ -52,3 +52,23 @@ h1 {
     width: 60%;
     transform: rotate(25deg);
 }
+
+/* Features */
+.features {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.feature-text {
+    color: #8f8f8f;
+}
+
+.feature-icon {
+    color: #ef8172;
+    font-size: 3rem;
+}
+
+.feature-column {
+    text-align: center;
+}
