@@ -39,7 +39,7 @@ def home():
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
-        with open('./Day_061_CoffeeWifi/cafe-data.csv', mode="a") as csv_file:
+        with open('./Day_061_CoffeeWifi/cafe-data.csv', mode="a", encoding="utf-8") as csv_file:
             csv_file.write(f"\n{form.cafe.data},"
                         f"{form.location.data},"
                         f"{form.open.data},"
@@ -47,7 +47,7 @@ def add_cafe():
                         f"{form.coffee.data},"
                         f"{form.wifi.data},"
                         f"{form.power.data}")
-        return redirect(url_for('cafes'), form=form)
+        return redirect(url_for('cafes'))
     # Exercise:
     # Make the form write a new row into cafe-data.csv
     # with   if form.validate_on_submit()
