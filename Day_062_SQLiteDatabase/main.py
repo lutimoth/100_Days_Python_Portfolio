@@ -7,12 +7,18 @@ all_books = []
 
 @app.route('/')
 def home():
-    pass
+    return render_template('index.html')
 
 
-@app.route("/add")
+@app.route("/add", methods=["GET","POST"])
 def add():
-    pass
+    book_info = {
+        'name': request.form.get('book_name'),
+        'author': request.form.get('book_author'),
+        'rating': request.form.get('rating')
+    }
+    all_books.append(book_info)
+    return render_template('add.html')
 
 
 if __name__ == "__main__":
