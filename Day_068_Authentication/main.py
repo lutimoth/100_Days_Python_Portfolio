@@ -10,6 +10,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Springboard_GIT/100_Days_Pyt
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 ##CREATE TABLE IN DB
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -19,6 +22,9 @@ class User(UserMixin, db.Model):
 #Line below only required once, when creating DB. 
 #db.create_all()
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 @app.route('/')
 def home():
@@ -28,19 +34,37 @@ def home():
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        plain_pw = request.form.get('password')
+        hash_pw = generate_password_hash(plain_pw, method='pbkdf2:sha256', salt_length=8)
         new_user=User(
             name = request.form.get('name'),
             email = request.form.get('email'),
-            password = request.form.get('password')
+            password = hash_pw
         )
         db.session.add(new_user)
         db.session.commit()
+
+        login_user(new_user)
+
         return redirect(url_for("secrets"))
     return render_template("register.html")
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(email=email).first()
+        if user is None:
+            flash
+
+
+        if check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('secrets'))
+        
     return render_template("login.html")
 
 
