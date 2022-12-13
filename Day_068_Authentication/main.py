@@ -28,12 +28,16 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", logged_in=current_user.is_authenticated)
 
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
+        if User.query.filter_by(email=request.form.get('email')).first():
+            flash('Sorry this email already exists, try logging in!')
+            return redirect(url_for('login'))
+       
         plain_pw = request.form.get('password')
         hash_pw = generate_password_hash(plain_pw, method='pbkdf2:sha256', salt_length=8)
         new_user=User(
@@ -47,7 +51,8 @@ def register():
         login_user(new_user)
 
         return redirect(url_for("secrets"))
-    return render_template("register.html")
+
+    return render_template("register.html", logged_in=current_user.is_authenticated)
 
 
 @app.route('/login', methods=['GET','POST'])
@@ -58,19 +63,20 @@ def login():
 
         user = User.query.filter_by(email=email).first()
         if user is None:
-            flash
-
-
-        if check_password_hash(user.password, password):
+            flash('This email does not exist, try again')
+            return redirect(url_for('login'))
+        elif not check_password_hash(user.password, password):
+            flash('Password incorect, please try again')
+            return redirect(url_for('login'))
+        else:
             login_user(user)
             return redirect(url_for('secrets'))
-        
-    return render_template("login.html")
+    return render_template("login.html", logged_in=current_user.is_authenticated)
 
 
 @app.route('/secrets')
 def secrets():
-    return render_template("secrets.html")
+    return render_template("secrets.html", name=current_user.name, logged_in=True)
 
 
 @app.route('/logout')
