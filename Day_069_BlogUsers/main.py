@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm, RegisterForm
+from forms import CreatePostForm, RegisterForm, LoginForm
 from flask_gravatar import Gravatar
 
 app = Flask(__name__)
@@ -14,11 +14,17 @@ app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 ##CONNECT TO DB
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
 
 ##CONFIGURE TABLES
 
@@ -52,7 +58,10 @@ def get_all_posts():
 def register():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-
+        if User.query.filter_by(email=register_form.email.first()):
+            flash('Sorry this email already exists, try logging in!')
+            return redirect(url_for('login'))
+       
         hash_and_salt = generate_password_hash(register_form.password.data, method='pbkdf2:sha256', salt_length=8)
         new_user = User(
             name = register_form.name.data,
@@ -62,13 +71,25 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
+        login_user(new_user)
         return redirect(url_for("get_all_posts"))
     return render_template("register.html", form=register_form)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("login.html")
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+
+        user = User.query.filter_by(email=email).first()
+        
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('get_all_posts'))
+          
+    return render_template("login.html", form=form)
 
 
 @app.route('/logout')
