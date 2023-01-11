@@ -9,6 +9,14 @@ morse_code = {
     '8': '---..', '9': '----.', '0': '-----',
 }
 
-phrase = input("Please input a string here!")
+phrase = input("Please input a string here!").upper()
 
 morse_phrase = ""
+
+for _ in phrase:
+    if _ in morse_code:
+        morse_phrase += morse_code[_] 
+    else:
+        morse_phrase += _
+
+print(morse_phrase)
