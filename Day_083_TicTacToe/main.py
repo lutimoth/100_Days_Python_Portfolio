@@ -4,12 +4,9 @@
 ## --- Build Board --- ###
 # perhaps build the board as a list of lists
 
-board = [
-    [' | | '],
-    ['-----'],
-    [' | | '],
-    ['-----'],
-    [' | | '],
-]
+from board import Board
 
-print(board)
+new_board = Board()
+
+for _ in new_board.board:
+    print(_)
