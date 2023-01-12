@@ -8,8 +8,8 @@ from board import Board
 
 board = Board()
 
-for _ in board.board:
-    print(_)
+# for _ in board.board:
+#     print(_)
     
 ## get input
 
@@ -21,14 +21,22 @@ else:
     player_2 = 'X'
 
 def symbol_place(board, row, col, player_symbol):
+    row_string = board[row-1][0]
     if col == 1:
-        board[row-1][col] = player_symbol
+        placed_string = row_string[:col] + player_symbol + row_string[col+1:]
+        board[row-1][0] = placed_string
     if col == 2:
-        board[row-1][4] = player_symbol
+        placed_string = row_string[:4] + player_symbol + row_string[5:]
+        board[row-1][0] = placed_string
     if col == 3:
-        board[row-1][7] = player_symbol
+        placed_string = row_string[:7] + player_symbol + row_string[8:]
+        board[row-1][0] = placed_string
     return board
-        
+    
+
+# row_string = board.board[0][0]
+# row_string = row_string[:1] + 'X' + row_string[2:]
+# print(row_string)
 
 round = 1
 
@@ -38,10 +46,11 @@ while round <= 9:
         col_1 = int(input("Player 1, what column would you like to place your symbol?"))
         board.board = symbol_place(board.board, row_1, col_1, player_1)
         for _ in board.board:
-            print(_)
+            print(_[0])
     if round%2 == 0:
         row_2 = int(input("Player 2, what row would you like to place your symbol?"))
         col_2 = int(input("Player 2, what column would you like to place your symbol?"))
         board.board = symbol_place(board.board, row_2, col_2, player_2)
         for _ in board.board:
-            print(_)
+            print(_[0])
+    round += 1
