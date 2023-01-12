@@ -13,12 +13,6 @@ board = Board()
     
 ## get input
 
-player_1 = input("Would you like to be X or O? ")
-
-if player_1 == 'X':
-    player_2 = 'O'
-else:
-    player_2 = 'X'
 
 def symbol_place(board, row, col, player_symbol):
     if row == 1:
@@ -46,22 +40,41 @@ def symbol_place(board, row, col, player_symbol):
 # row_string = row_string[:1] + 'X' + row_string[2:]
 # print(row_string)
 
-round = 1
+def play_game():
+    player_1 = input("Player 1, would you like to be X or O? ")
 
-while round <= 9:
-    if round%2 != 0:
-        row_1 = int(input("Player 1, what row would you like to place your symbol?"))
-        col_1 = int(input("Player 1, what column would you like to place your symbol?"))
-        board.board = symbol_place(board.board, row_1, col_1, player_1)
-        for _ in board.board:
-            print(_[0])
-    if round%2 == 0:
-        row_2 = int(input("Player 2, what row would you like to place your symbol?"))
-        col_2 = int(input("Player 2, what column would you like to place your symbol?"))
-        board.board = symbol_place(board.board, row_2, col_2, player_2)
-        for _ in board.board:
-            print(_[0])
-    round += 1
+    if player_1 == 'X':
+        player_2 = 'O'
+    else:
+        player_2 = 'X'
+    
+    num_round = 1
+    
+    while num_round <= 9:
+        if num_round%2 != 0:
+            row_1 = int(input("Player 1, what row would you like to place your symbol?"))
+            col_1 = int(input("Player 1, what column would you like to place your symbol?"))
+            board.board = symbol_place(board.board, row_1, col_1, player_1)
+            for _ in board.board:
+                print(_[0])
+        if num_round%2 == 0:
+            row_2 = int(input("Player 2, what row would you like to place your symbol?"))
+            col_2 = int(input("Player 2, what column would you like to place your symbol?"))
+            board.board = symbol_place(board.board, row_2, col_2, player_2)
+            for _ in board.board:
+                print(_[0])
+        num_round += 1
+        
+    return num_round
 
-if round > 9:
+num_round = play_game()
+
+
+if num_round > 9:
     print('Game Over!')
+    new_game = input('Would you like to play again? Y/N ').upper()
+    
+if new_game == 'Y':
+    board.board = board.new_board
+    play_game()
+    
