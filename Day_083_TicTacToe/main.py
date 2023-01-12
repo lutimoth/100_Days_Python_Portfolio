@@ -21,16 +21,24 @@ else:
     player_2 = 'X'
 
 def symbol_place(board, row, col, player_symbol):
-    row_string = board[row-1][0]
+    if row == 1:
+        row_index = 0
+    elif row == 2:
+        row_index = 2
+    else:
+        row_index = 4
+        
+    row_string = board[row_index][0]
+        
     if col == 1:
         placed_string = row_string[:col] + player_symbol + row_string[col+1:]
-        board[row-1][0] = placed_string
     if col == 2:
         placed_string = row_string[:4] + player_symbol + row_string[5:]
-        board[row-1][0] = placed_string
     if col == 3:
         placed_string = row_string[:7] + player_symbol + row_string[8:]
-        board[row-1][0] = placed_string
+    
+    board[row_index][0] = placed_string
+
     return board
     
 
@@ -54,3 +62,6 @@ while round <= 9:
         for _ in board.board:
             print(_[0])
     round += 1
+
+if round > 9:
+    print('Game Over!')
