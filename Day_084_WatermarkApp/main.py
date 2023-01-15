@@ -18,11 +18,12 @@ title_label.grid(column=0, row=1, columnspan=2)
 upload_button = Button(window, text="Upload Image", command=lambda:upload_file())
 upload_button.grid(column=0,row=2)
 
-watermark_button = Button(window, text="Create Watermark", command=lambda:create_watermark())
+watermark_button = Button(window, text="Create Watermark", command=lambda:create_watermark(canvas))
 watermark_button.grid(column=1, row=2)
 
 def upload_file():
     global img
+    global canvas
     file_types = [('Jpg files','*.jpg')]
     file_name = filedialog.askopenfilename(filetypes=file_types)
     img = ImageTk.PhotoImage(file=file_name)
@@ -30,23 +31,15 @@ def upload_file():
     canvas.create_image(2, 2, image=img, anchor='nw')
     canvas.grid(column=0, row=3,columnspan=2)
 
-def create_watermark():
-    water_img = img
-    width, height = water_img.width(), water_img.height()
-
-    draw_water = ImageDraw.Draw(water_img)
+def create_watermark(canvas):
+    width, height = img.width(), img.height()
     text = "Timothy Lu"
-    water_font = ImageFont.truetype('arial.ttf', 36)
 
-    textwidth, textheight = draw_water.textsize(text,water_font)
-
-    margin = 10
-    x = width - textwidth - margin
-    y = height - textheight - margin
-
-    draw_water.text((x, y), text, font=water_font)
-
-    b2 = Button(window, image=water_img)
-    b2.grid(column=0, row=3)
+    margin = 50
+    x = width - margin 
+    y = height - 10
+    
+    canvas_text = canvas.create_text(x, y)
+    canvas.itemconfig(canvas_text, text=text, font=('courier',12), fill="white")
 
 window.mainloop()
