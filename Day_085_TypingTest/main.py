@@ -38,8 +38,8 @@ def check_phrase(event):
     ratio = correct/total
     ratio_perc = round(ratio*100,2)
     speed = round(end_time-starting_time,2)
-    speed_to_char = (len(phrase)/speed)*60
-    wpm = round(speed_to_char/4.7)
+    num_words = len(phrase.split())
+    wpm = round((num_words/speed)*60) 
     speed_label['text'] = f"You had an accuracy of: {ratio_perc}% and a speed of {speed}s with a wpm of {wpm}"
     # print(ratio)
     # print(end_time-starting_time)
