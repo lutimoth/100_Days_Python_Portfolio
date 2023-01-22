@@ -1,30 +1,50 @@
-import numpy as np
-import matplotlib.image as img
-import matplotlib.pyplot as plt
-import pandas as pd
+from flask import Flask, render_template, redirect, url_for, request, flash, send_from_directory
+from werkzeug.utils import secure_filename
+from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
+import os
 
-img = img.imread('milfordtest.jpg')
-# print(img)
-# print(img.shape)
-color, count = np.unique(img.reshape(-1, img.shape[-1]), axis=0, return_counts=True)
+app=Flask(__name__)
 
-color_df = pd.DataFrame(color, columns=['R','G','B'])
-color_df['count'] = count
+UPLOAD_FOLDER = './uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-def rgb_to_hex(r,g,b):
-    return ('{:02X}' *3).format(r,g,b)
+Bootstrap(app)
 
-def top_ten_colors(counted_colors):
-    top_ten = counted_colors.sort_values(by='count', ascending=False).head(10)
-    
-    colors={}
-    
-    for i in top_ten.index.values:
-        R = top_ten.loc[i]['R']
-        G = top_ten.loc[i]['G']
-        B = top_ten.loc[i]['B']
-        color_string = f'{R}, {G}, {B}' 
-        colors[color_string] = rgb_to_hex(R, G, B)
-    return colors
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-print(top_ten_colors(color_df))
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@app.route("/", methods=['GET','POST'])
+def home():
+    def upload_file():
+        if request.method == 'POST':
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['file']
+            # if user does not select file, browser also
+            # submit an empty part without filename
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                return redirect(url_for('uploaded_file',
+                                        filename=filename))
+    return render_template("index.html")
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'],
+                               img=filename)
+
+if __name__ == '__main__':
+    app.run(debug=True)
